@@ -4,6 +4,7 @@ import React from 'react';
 import './ReviewItem.css'
 
 const ReviewItem = (props) => {
+    const {product, handleRemoveProduct} = props;
     const {name, img, price, shipping, quantity} = props.product;
     return (
         <div className='review-item'>
@@ -17,10 +18,10 @@ const ReviewItem = (props) => {
                     </p>
                     <p><span className='orange-color'>Price: ${price}</span></p>
                     <p><small>Shipping: ${shipping}</small></p>
-                    <p><small>Shipping: {quantity}</small></p>
+                    <p><small>Quantity: {quantity}</small></p>
                 </div>
                 <div className="delete-container">
-                    <button className='delete-button'>
+                    <button onClick={() => handleRemoveProduct(product)} className='delete-button'>
                         <FontAwesomeIcon className='delete-icon' icon={faTrashAlt}></FontAwesomeIcon>
                     </button>
                 </div>
