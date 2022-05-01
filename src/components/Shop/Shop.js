@@ -24,7 +24,7 @@ const Shop = () => {
         const storedCart = getStoredCart(); // storedCart ekta object dibe
         const savedCart = []; // ei new array tei push korbo
         for(const id in storedCart){
-            const addedProduct = products.find(product => product.id === id);
+            const addedProduct = products.find(product => product._id === id);
             if(addedProduct){
                 const quantity = storedCart[id]; // storedCart er moddhei id ase sekhane quantity ase
                 addedProduct.quantity = quantity; // addedProduct e .quantity ase ar etar value hbe quantity.
@@ -39,19 +39,19 @@ const Shop = () => {
         // console.log(product)
         // do not do cart.push(product);
         let newCart = [];
-        const exists = cart.find(product => product.id === selectedProduct.id)
+        const exists = cart.find(product => product._id === selectedProduct._id)
         if(!exists){
             selectedProduct.quantity = 1;
             newCart = [...cart, selectedProduct]; // not exists tai notun koire selectedProduct boshano hoise
         }
         else{
-            const rest = cart.filter(product => product.id !== selectedProduct.id) // je pd bade add korte chaccho seta dibe
+            const rest = cart.filter(product => product._id !== selectedProduct._id) // je pd bade add korte chaccho seta dibe
             exists.quantity = exists.quantity + 1;
             newCart = [...rest, exists];
         }
         
         setCart(newCart)
-        addToDb(selectedProduct.id)
+        addToDb(selectedProduct._id)
     }
 
     return (
@@ -59,7 +59,7 @@ const Shop = () => {
             <div className="products-container">
                 {
                     products.map(product => <Product 
-                        key={product.id}
+                        key={product._id}
                         product={product}
                         handleAddToCart={handleAddToCart}
                         ></Product>)
