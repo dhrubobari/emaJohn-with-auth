@@ -9,6 +9,19 @@ import './Shop.css'
 const Shop = () => {
     const [products, setProducts] = UseProducts(); 
     const [cart, setCart] = useState([])
+    const [pagecount, setPagecount] = useState(0); // numbers default value is 0, pagination.
+    const [page, setPage] = useState(0); // for pagination
+
+    // pagination
+    useEffect(()=>{
+        fetch('http://localhost:5000/productcount')
+        .then(res => res.json())
+        .then(data =>{
+            const count = data.count; // data = a object in http://localhost:5000/productcount
+            const pages = Math.ceil(count/10); // per page would have 10 data or pd
+            setPagecount(pages);
+        })
+    }, [])
 
     useEffect(() => {
         // console.log('fetch uploaded')
@@ -64,11 +77,21 @@ const Shop = () => {
                         handleAddToCart={handleAddToCart}
                         ></Product>)
                 }
+                {/* pagination scroll */}
+                <div className='pagination'>
+                    {
+                        [...Array(pagecount).keys()]
+                        .map(number => <button 
+                            className={page === number ? 'selected' : ''}
+                            onClick={() => setPage(number)}
+                            >{number}</button>)
+                    }
+                </div>
             </div>
             <div className="cart-container">
                 <Cart cart={cart}>
                     <Link to="/orders">
-                        <button>Review Order</button>
+                        <button>Review Order <span style={{fontSize: '18px'}}>⇥</span></button>
                     </Link>
                 </Cart>
             </div>
