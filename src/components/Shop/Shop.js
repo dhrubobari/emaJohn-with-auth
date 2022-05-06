@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { addToDb, getStoredCart } from '../../utilities/fakedb';
+import { addToDb } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
-import UseProducts from '../Hooks/UseProducts';
+import UseCart from '../Hooks/UseCart';
 import Product from '../Product/Product';
 import './Shop.css'
 
 const Shop = () => {
-    const [products, setProducts] = UseProducts(); 
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = UseCart(); // the next page will not reset added prods
     const [pagecount, setPagecount] = useState(0); // numbers default value is 0, pagination.
     const [page, setPage] = useState(0); // for pagination
+    const [size, setSize] = useState(10); // for size, default value 10. page will show 10 products.
+    const [products, setProducts] = useState([]);  
+
+    useEffect( () => {
+        fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
+        .then(res => res.json())
+        .then(data => setProducts(data))
+    }, [page, size]) // dependencies for if page hit api will change, and size will also change.
 
     // pagination
     useEffect(()=>{
@@ -32,21 +39,20 @@ const Shop = () => {
         })
     }, [])
 
-    useEffect(() => {
-        console.log('local storage first line', products)
-        const storedCart = getStoredCart(); // storedCart ekta object dibe
-        const savedCart = []; // ei new array tei push korbo
-        for(const id in storedCart){
-            const addedProduct = products.find(product => product._id === id);
-            if(addedProduct){
-                const quantity = storedCart[id]; // storedCart er moddhei id ase sekhane quantity ase
-                addedProduct.quantity = quantity; // addedProduct e .quantity ase ar etar value hbe quantity.
-                savedCart.push(addedProduct);
-            }
-        }
-        setCart(savedCart); // ekhane thk display
+    // useEffect(() => {
+    //     const storedCart = getStoredCart(); // storedCart ekta object dibe
+    //     const savedCart = []; // ei new array tei push korbo
+    //     for(const id in storedCart){
+    //         const addedProduct = products.find(product => product._id === id);
+    //         if(addedProduct){
+    //             const quantity = storedCart[id]; // storedCart er moddhei id ase sekhane quantity ase
+    //             addedProduct.quantity = quantity; // addedProduct e .quantity ase ar etar value hbe quantity.
+    //             savedCart.push(addedProduct);
+    //         }
+    //     }
+    //     setCart(savedCart); // ekhane thk display
         
-    }, [products]) // this useEffect will be depended on [products]
+    // }, [products]) // this useEffect will be depended on [products]
     
     const handleAddToCart = (selectedProduct) => {
         // console.log(product)
@@ -84,8 +90,14 @@ const Shop = () => {
                         .map(number => <button 
                             className={page === number ? 'selected' : ''}
                             onClick={() => setPage(number)}
-                            >{number}</button>)
+                            >{number + 1}</button>)
                     }
+                    <select onChange={e => setSize(e.target.value)}>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
                 </div>
             </div>
             <div className="cart-container">
