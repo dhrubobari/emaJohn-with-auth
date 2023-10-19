@@ -5,6 +5,7 @@ import Cart from '../Cart/Cart';
 import UseCart from '../Hooks/UseCart';
 import Product from '../Product/Product';
 import './Shop.css'
+import Banner from '../Banner/Banner';
 
 const Shop = () => {
     const [cart, setCart] = UseCart(); // the next page will not reset added prods
@@ -74,7 +75,12 @@ const Shop = () => {
     }
 
     return (
+        <>
+        <Banner />
         <div className="shop-container">
+            <div className="our-products-title">
+                <h1>Featured product</h1>
+            </div>
             <div className="products-container">
                 {
                     products.map(product => <Product 
@@ -100,14 +106,15 @@ const Shop = () => {
                     </select>
                 </div>
             </div>
-            <div className="cart-container">
+            {/* <div className="cart-container">
                 <Cart cart={cart}>
                     <Link to="/orders">
                         <button>Review Order <span style={{fontSize: '18px'}}>⇥</span></button>
                     </Link>
                 </Cart>
-            </div>
+            </div> */}
         </div>
+        </>
     );
 };
 

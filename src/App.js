@@ -9,12 +9,20 @@ import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import RequireAuth from './components/require-auth/RequireAuth';
 import Shipment from './components/Shipment/Shipment';
+import Dashboard from './components/Admin/Dashboard';
+import AllProducts from './components/Admin/AllProducts';
+import AddProducts from './components/Admin/AddProducts';
+import AdminNav from './components/Admin/AdminNav';
+import { useLocation } from 'react-router-dom';
 
 
 function App() {
+
+  const location = useLocation();
+
   return (
-    <div>
-      <Header></Header>
+    <>
+    {location.pathname.startsWith("/dashboard") ? <AdminNav /> : <Header />}
       <Routes>
         <Route path='/' element={<Shop></Shop>}></Route>
         <Route path='/shop' element={<Shop></Shop>}></Route>
@@ -29,12 +37,27 @@ function App() {
             <Shipment></Shipment>
           </RequireAuth>
         }></Route>
+        <Route path='/dashboard' element={
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        }></Route>
+        <Route path='dashboard/all-products' element={
+          <RequireAuth>
+            <AllProducts />
+          </RequireAuth>
+        }></Route>
+        <Route path='dashboard/add-products' element={
+          <RequireAuth>
+            <AddProducts />
+          </RequireAuth>
+        }></Route>
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<SignUp></SignUp>}></Route>
       </Routes>
-    </div>
-  );
+    </>
+  )
 }
 // even if path goes to home, it will show again the shop component.
 

@@ -1,16 +1,26 @@
 .shop-container {
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 1fr;
+    align-items: start;
+}
+
+.our-products-title {
+    grid-column: 1 / -1;
+    text-align: center;
+    /* width: 80%; */
+    /* justify-self: start; */
 }
 
 .products-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 45px;
-    margin: 100px 50px;
+    margin: 50px;
 }
 
 .cart-container {
+    text-align: center;
+    align-self: start;
     background-color: rgba(255, 153, 0, 0.3);
 }
 
