@@ -79,7 +79,8 @@ const Shop = () => {
         <Banner />
         <div className="shop-container">
             <div className="our-products-title">
-                <h1>Featured product</h1>
+                <h1 className="mt-5 mb-3">Featured product</h1>
+                <p>Crafted for Your Delight.</p>
             </div>
             <div className="products-container">
                 {

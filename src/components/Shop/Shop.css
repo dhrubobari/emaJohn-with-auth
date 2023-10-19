@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+
 .shop-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -6,16 +9,28 @@
 
 .our-products-title {
     grid-column: 1 / -1;
-    text-align: center;
     /* width: 80%; */
-    /* justify-self: start; */
+    justify-self: left;
+}
+
+.our-products-title h1 {
+    padding: 0px 45px;
+    color: #1C2B35;
+    font-family: 'Kanit', sans-serif;
+}
+
+.our-products-title p {
+    font-size: 19px;
+    padding: 0px 45px;
+    color: #ff9900;
+    font-family: 'Raleway', sans-serif;
 }
 
 .products-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 45px;
-    margin: 50px;
+    grid-gap: 38px;
+    margin: 40px 20px 47px 47px;
 }
 
 .cart-container {

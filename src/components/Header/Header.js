@@ -15,30 +15,13 @@ const Header = () => {
     
     return (
     <>
-        <nav className='header'>
-            <img src={logo} alt="" />
-            <div>
-                <Link to="/shop">Shop</Link>
-                <Link to="/orders">Orders</Link>
-                <Link to="/inventory">Inventory</Link>
-                <Link to="/about">About</Link>
-                {
-                    user ?
-                    <button onClick={handleSignOut}>Sign Out</button>
-                    :
-                    <Link to="/login">Login</Link>
-                }
-                <Link to="/dashboard">Dashboard</Link>
-            </div>
-        </nav>
-
         <div class="bottom-bar">
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
                             <a href="index.html">
-                                <img src="" alt="Logo" />
+                                <img src={logo} alt="Logo" />
                             </a>
                         </div>
                     </div>
@@ -63,7 +46,22 @@ const Header = () => {
                 </div>
             </div>
         </div>
-        
+        <nav className='header'>
+            {/* <img src={logo} alt="" /> */}
+            <div>
+                <Link to="/shop">Shop</Link>
+                <Link to="/orders">Orders</Link>
+                <Link to="/inventory">Inventory</Link>
+                <Link to="/about">About</Link>
+                {
+                    user ?
+                    <button onClick={handleSignOut}>Sign Out</button>
+                    :
+                    <Link to="/login">Login</Link>
+                }
+                <Link to="/dashboard">Dashboard</Link>
+            </div>
+        </nav>
     </>    
     );
 };

@@ -1,5 +1,6 @@
 .banner {
   position: relative;
+  background: rgb(243, 246, 255);
 }
 
 .swiper {
@@ -18,10 +19,14 @@
   align-items: center;
 }
 
+.swiper-container {
+  padding-top: 1.8px;
+}
+
 .swiper-slide img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 360.5px;
   object-fit: cover;
 }
 
@@ -33,7 +38,7 @@
 .banner .navbar {
   padding: 0;
   height: 100%;
-  max-height: 400px;
+  max-height: 365px;
   overflow: hidden;
   background: #ffffff !important;
 }
@@ -122,6 +127,10 @@
   background: #ffffff;
 }
 
+.banner .side-img {
+  padding-top: 1.8px;
+}
+
 .banner .img-item {
   position: relative;
   width: 100%;
@@ -131,7 +140,7 @@
 
 .banner .img-item img {
   width: 100%;
-  height: 100%;
+  height: 178px;
   object-fit: cover;
 }
 
@@ -164,4 +173,96 @@
 
 .banner .img-text:hover p {
   margin: 0;
+}
+
+.bottom-bar {
+  padding: 15px 0;
+  background: #131921;
+}
+
+.bottom-bar .logo {
+  text-align: left;
+  overflow: hidden;
+  margin-left: 18px;
+}
+
+.bottom-bar .logo a img {
+  max-height: 60px;
+}
+
+.bottom-bar .search {
+  width: 100%;
+}
+
+.bottom-bar .search input[type=text] {
+  width: 100%;
+  height: 40px;
+  padding: 0 15px;
+  color: #666666;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+}
+
+.bottom-bar .search button {
+  position: absolute;
+  width: 40px;
+  height: 38px;
+  top: 1px;
+  right: 16px;
+  padding: 0 15px;
+  border: none;
+  background: none;
+  color: #FF6F61;
+  border-radius: 0 2px 2px 0;
+}
+
+.bottom-bar .search button:hover {
+  background: #FF6F61;
+  color: #ffffff;
+}
+
+.bottom-bar .user {
+  font-size: 0;
+  text-align: right;
+}
+
+.bottom-bar .user .wishlist {
+  margin-right: 15px;
+}
+
+.bottom-bar .user .cart i,
+.bottom-bar .user .wishlist i {
+  color: #FF6F61;
+}
+
+.bottom-bar .user .cart span,
+.bottom-bar .user .wishlist span {
+  color: #FF6F61;
+  font-size: 15px;
+}
+
+.bottom-bar .user .cart:hover i,
+.bottom-bar .user .wishlist:hover i,
+.bottom-bar .user .cart:hover span,
+.bottom-bar .user .wishlist:hover span {
+  color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .bottom-bar {
+      max-height: 90px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .bottom-bar .logo,
+  .bottom-bar .search,
+  .bottom-bar .user {
+      text-align: center;
+      margin-bottom: 15px;
+  }
+  
+  .bottom-bar .user {
+      margin-bottom: 0;
+  }
 }

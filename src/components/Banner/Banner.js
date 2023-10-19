@@ -1,7 +1,10 @@
 import React from "react";
 import "../Banner/Banner.css";
 import headphoneBanner from "../../images/headphones-sales-banner.png";
-import watchBanner from "../../images/vintage-dark-interior-podium.png";
+import shoesBanner from "../../images/shoes-craze-sale-facebook-ad-design-template.jpg";
+import watchBanner from "../../images/watch-sale-ad-promote-template-design.png";
+import airpodsPro from "../../images/rugged_case_airpods_pro.png";
+import appleWatch from "../../images/applewatchekg.png";
 
 // Import Swiper styles
 import "swiper/css";
@@ -20,7 +23,7 @@ function Banner() {
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-3">
-            <nav class="navbar bg-light">
+            <nav class="navbar">
               <ul class="navbar-nav">
                 <li class="nav-item">
                   <a class="nav-link" href="#">
@@ -65,29 +68,37 @@ function Banner() {
               </ul>
             </nav>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 px-1 swiper-container">
             <Swiper
               spaceBetween={30}
               pagination={{
                 clickable: true,
               }}
-              modules={[Pagination]}
+              navigation
+              modules={[Pagination, Navigation]}
               className="mySwiper"
             >
-              <SwiperSlide><img src={headphoneBanner} alt=""/></SwiperSlide>
-              <SwiperSlide><img src={watchBanner} alt=""/></SwiperSlide>
+              <SwiperSlide>
+                <img src={headphoneBanner} alt="" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={shoesBanner} alt="" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={watchBanner} alt="" />
+              </SwiperSlide>
             </Swiper>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 px-1 side-img">
             <div class="header-img">
               <div class="img-item">
-                <img src={headphoneBanner} />
+                <img src={airpodsPro} />
                 <a class="img-text" href="">
                   <p>Some text goes here that describes the image</p>
                 </a>
               </div>
-              <div class="img-item">
-                <img src={watchBanner} />
+              <div class="img-item mt-1">
+                <img src={appleWatch} />
                 <a class="img-text" href="">
                   <p>Some text goes here that describes the image</p>
                 </a>
