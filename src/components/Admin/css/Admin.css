@@ -1,0 +1,32 @@
+.admin_header {
+    display: flex;
+}
+
+.admin_menu-list {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+  }
+
+.admin_menu-item a:hover {
+    color: brown;
+}
+
+.admin_header-container {
+    background: #131921;
+}
+
+.admin-menu.active {
+    background: whitesmoke;
+}
+
+.add_product_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.custom_form_group {
+    width: 474px;
+}

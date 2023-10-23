@@ -15,7 +15,7 @@ import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // import required modules
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 function Banner() {
   return (
@@ -74,8 +74,12 @@ function Banner() {
               pagination={{
                 clickable: true,
               }}
+              autoplay={{
+                delay: 3500,
+                disableOnInteraction: false,
+              }}
               navigation
-              modules={[Pagination, Navigation]}
+              modules={[Autoplay, Pagination, Navigation]}
               className="mySwiper"
             >
               <SwiperSlide>

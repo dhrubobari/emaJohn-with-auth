@@ -20,7 +20,7 @@ const Header = () => {
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="#">
                                 <img src={logo} alt="Logo" />
                             </a>
                         </div>

@@ -1,9 +1,7 @@
 import React from 'react'
 
-const AllProducts=()=>{
+export default function AllProducts() {
   return (
     <div>AllProducts</div>
   )
 }
-
-export default AllProducts
