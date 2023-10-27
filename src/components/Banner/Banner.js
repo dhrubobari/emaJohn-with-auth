@@ -2,7 +2,7 @@ import React from "react";
 import "../Banner/Banner.css";
 import headphoneBanner from "../../images/headphones-sales-banner.png";
 import shoesBanner from "../../images/shoes-craze-sale-facebook-ad-design-template.jpg";
-import watchBanner from "../../images/watch-sale-ad-promote-template-design.png";
+import watchBanner from "../../images/watch-sale-ad.jpg";
 import airpodsPro from "../../images/rugged_case_airpods_pro.png";
 import appleWatch from "../../images/applewatchekg.png";
 

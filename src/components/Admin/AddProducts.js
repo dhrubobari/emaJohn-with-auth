@@ -11,46 +11,67 @@ import {
   Dropdown,
   DropdownToggle,
 } from "reactstrap";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
+import {db,storage } from '../../firebase.init';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 
-const AddProductPage = () => {
-  const [enterTitle, setEnterTitle] = useState("");
-  const [enterShortDesc, setEnterShortDesc] = useState("");
-  const [enterDesc, setEnterDesc] = useState("");
-  const [enterCategory, setEnterCategory] = useState("");
-  const [enterPrice, setEnterPrice] = useState("");
-  const [enterProductImg, setEnterProductImg] = useState(null);
+const AddProducts = () => {
+  const [productTitle, setProductTitle] = useState("");
+  const [productDesc, setProductDesc] = useState("");
+  const [productShortDes, setProductShortDes] = useState("");
+  const [productCategory, setProductCategory] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productImg, setProductImg] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setProductDetails({ ...productDetails, [name]: value });
-  // };
-
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setProductDetails({ ...productDetails, productImage: file });
-  // };
+  const navigate = useNavigate();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  const addProduct = async (e) => {
-    e.preventDefault();
+  const addProduct = e => {
 
-    const product = {
-      title: enterTitle,
-      shortDesc: enterShortDesc,
-      description: enterDesc,
-      category: enterCategory,
-      price: enterPrice,
-      imgUrl: enterProductImg,
-    };
-    console.log(product);
+    e.preventDefault();
+    setLoading(true);
+
+    // add to firebase db
+    try {
+      const docRef = collection(db, 'products')
+      const storageRef = ref(storage, `productImages/${Date.now() + setProductImg.name}`)
+      const uploadTask = uploadBytesResumable(storageRef, productImg)
+
+      uploadTask.on(() => {
+        toast.error('images not uploaded!')
+      }, ()=>{
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL)=>{
+          await addDoc(docRef, {
+            title: productTitle,
+            shortDesc: productShortDes,
+            descripton: productDesc,
+            category: productCategory,
+            price: productPrice,
+            imgUrl: downloadURL
+          })
+        })
+        setLoading(false);
+        toast.success('product sucessfully added!')
+        navigate("/dashboard/all-products");
+    })
+
+    } catch (error) {
+      
+    }
+    // console.log(product);
   };
 
   return (
     <Container className="add_product_container">
-      <Form onSubmit={addProduct}>
+      {loading ? (<h4 className="py-5">loading..</h4>):<Form onSubmit={addProduct}>
         <FormGroup className="custom_form_group">
           <Label for="title">Product Title</Label>
           <Input
@@ -58,8 +79,8 @@ const AddProductPage = () => {
             name="title"
             id="title"
             required
-            value={enterTitle}
-            onChange={(e) => setEnterTitle(e.target.value)}
+            value={productTitle}
+            onChange={(e) => setProductTitle(e.target.value)}
           />
         </FormGroup>
         <FormGroup className="custom_form_group">
@@ -69,8 +90,8 @@ const AddProductPage = () => {
             name="shortDescription"
             id="shortDescription"
             required
-            value={enterShortDesc}
-            onChange={(e) => setEnterShortDesc(e.target.value)}
+            value={productShortDes}
+            onChange={(e) => setProductShortDes(e.target.value)}
           />
         </FormGroup>
         <FormGroup className="custom_form_group">
@@ -80,8 +101,8 @@ const AddProductPage = () => {
             name="description"
             id="description"
             required
-            value={enterDesc}
-            onChange={(e) => setEnterDesc(e.target.value)}
+            value={productDesc}
+            onChange={(e) => setProductDesc(e.target.value)}
           />
         </FormGroup>
         <div className="d-flex align-items-center justify-content-between gap-2">
@@ -92,8 +113,8 @@ const AddProductPage = () => {
               name="price"
               id="price"
               required
-              value={enterPrice}
-              onChange={(e) => setEnterPrice(e.target.value)}
+              value={productPrice}
+              onChange={(e) => setProductPrice(e.target.value)}
             />
           </FormGroup>
           <FormGroup className="custom_form_group w-50">
@@ -102,23 +123,22 @@ const AddProductPage = () => {
               isOpen={dropdownOpen}
               toggle={toggle}
               required
-              value={enterCategory}
-              onChange={(e) => setEnterCategory(e.target.value)}
+              value={productCategory}
+              onChange={(e) => setProductCategory(e.target.value)}
             >
               <DropdownToggle caret>
-                {enterCategory ? enterCategory : "Select Category"}
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem onClick={() => setEnterCategory("")}>
+                <DropdownItem>
                   Phone
                 </DropdownItem>
-                <DropdownItem onClick={() => setEnterCategory("")}>
+                <DropdownItem>
                   Watch
                 </DropdownItem>
-                <DropdownItem onClick={() => setEnterCategory("")}>
+                <DropdownItem>
                   Wallet
                 </DropdownItem>
-                <DropdownItem onClick={() => setEnterCategory("")}>
+                <DropdownItem>
                   Shoes
                 </DropdownItem>
               </DropdownMenu>
@@ -127,19 +147,18 @@ const AddProductPage = () => {
         </div>
         <FormGroup className="custom_form_group">
           <Label
-            for="productImage"
-            onChange={(e) => setEnterProductImg(e.target.files(0))}
+            onChange={(e) => (e.target.files(0))}
           >
             Product Image
           </Label>
-          <Input type="file" required />
+          <Input type="file" required onChange={e => setProductImg(e.target.files[0])} />
         </FormGroup>
         <Button color="primary" type="submit">
           Add Product
         </Button>
-      </Form>
+      </Form>}
     </Container>
   );
 };
 
-export default AddProductPage;
+export default AddProducts;
