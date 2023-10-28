@@ -1,20 +1,9 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Container,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
-  DropdownToggle,
-} from "reactstrap";
+import { Button,Form,FormGroup,Label,Input,Container,} from "reactstrap";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import {db,storage } from '../../firebase.init';
+import { db,storage } from '../../firebase.init';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 
@@ -22,17 +11,13 @@ const AddProducts = () => {
   const [productTitle, setProductTitle] = useState("");
   const [productDesc, setProductDesc] = useState("");
   const [productShortDes, setProductShortDes] = useState("");
-  const [productCategory, setProductCategory] = useState("");
+  const [enterCategory, setenterCategory] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productImg, setProductImg] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
-
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const addProduct = e => {
 
@@ -53,13 +38,23 @@ const AddProducts = () => {
             title: productTitle,
             shortDesc: productShortDes,
             descripton: productDesc,
-            category: productCategory,
+            category: enterCategory,
             price: productPrice,
             imgUrl: downloadURL
           })
         })
         setLoading(false);
-        toast.success('product sucessfully added!')
+        toast('🦄 Wow so easy!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        // toast.success('product sucessfully added!')
         navigate("/dashboard/all-products");
     })
 
@@ -72,90 +67,77 @@ const AddProducts = () => {
   return (
     <Container className="add_product_container">
       {loading ? (<h4 className="py-5">loading..</h4>):<Form onSubmit={addProduct}>
-        <FormGroup className="custom_form_group">
+        <FormGroup className="form_group">
           <Label for="title">Product Title</Label>
           <Input
             type="text"
             name="title"
             id="title"
             required
+            className="border-1 border-secondary"
             value={productTitle}
             onChange={(e) => setProductTitle(e.target.value)}
           />
         </FormGroup>
-        <FormGroup className="custom_form_group">
+        <FormGroup className="form_group">
           <Label for="shortDescription">Short Description</Label>
           <Input
             type="text"
             name="shortDescription"
             id="shortDescription"
             required
+            className="border-1 border-secondary"
             value={productShortDes}
             onChange={(e) => setProductShortDes(e.target.value)}
           />
         </FormGroup>
-        <FormGroup className="custom_form_group">
+        <FormGroup className="form_group">
           <Label for="description">Description</Label>
           <Input
             type="textarea"
             name="description"
             id="description"
+            className="border-1 border-secondary"
             required
             value={productDesc}
             onChange={(e) => setProductDesc(e.target.value)}
           />
         </FormGroup>
         <div className="d-flex align-items-center justify-content-between gap-2">
-          <FormGroup className="custom_form_group w-50">
+          <FormGroup className="form_group w-50">
             <Label for="price">Price</Label>
             <Input
               type="number"
-              name="price"
-              id="price"
               required
               value={productPrice}
+              className="border-1 border-secondary"
               onChange={(e) => setProductPrice(e.target.value)}
             />
           </FormGroup>
-          <FormGroup className="custom_form_group w-50">
-            <Label for="category">Category</Label>
-            <Dropdown
-              isOpen={dropdownOpen}
-              toggle={toggle}
-              required
-              value={productCategory}
-              onChange={(e) => setProductCategory(e.target.value)}
-            >
-              <DropdownToggle caret>
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>
-                  Phone
-                </DropdownItem>
-                <DropdownItem>
-                  Watch
-                </DropdownItem>
-                <DropdownItem>
-                  Wallet
-                </DropdownItem>
-                <DropdownItem>
-                  Shoes
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+          <FormGroup className="form_group w-50">
+            <div>
+              <span>Category</span>
+            </div>
+            <div>
+            <select class="w-100 border-secondary rounded p-2 mt-2" value={enterCategory} onChange={e=> setenterCategory(e.target.value)}>
+              <option value="">select category</option>
+              <option value="watch">watch</option>
+              <option value="shoes">shoes</option>
+              <option value="phone">phones</option>
+              <option value="watch">glasses</option>
+            </select>
+            </div>
           </FormGroup>
         </div>
-        <FormGroup className="custom_form_group">
-          <Label
-            onChange={(e) => (e.target.files(0))}
-          >
-            Product Image
-          </Label>
-          <Input type="file" required onChange={e => setProductImg(e.target.files[0])} />
+        <FormGroup
+          action="/upload"
+          method="post"
+          enctype="multipart/form-data"
+          className="form_group"
+          onChange={e => setProductImg(e.target.files[0])}>  
+          <input type="file" class="w-75" name="image" required accept="image/*" />
+          <input type="submit" class="btn btn-secondary w-25" value="Add product" />  
         </FormGroup>
-        <Button color="primary" type="submit">
-          Add Product
-        </Button>
       </Form>}
     </Container>
   );

@@ -15,7 +15,6 @@ const useGetData = (collectionName) => {
             setData(data.docs.map(doc=>({...doc.data(), id: doc.id})))
             setLoading(false)
         };
-
         getData();
     }, []);
 

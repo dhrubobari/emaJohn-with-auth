@@ -14,11 +14,12 @@ import AllProducts from './components/Admin/AllProducts';
 import AddProducts from './components/Admin/AddProducts';
 import AdminNav from './components/Admin/AdminNav';
 import { useLocation } from 'react-router-dom';
-
+import useGetData from './custom-hooks/useGetData';
 
 function App() {
 
   const location = useLocation();
+  const {data: products, loading} = useGetData('products');
 
   return (
     <>
@@ -38,7 +39,7 @@ function App() {
           </RequireAuth>
         }></Route>
 
-        
+        {/* Dashboard routes */}
         <Route path='/dashboard' element={
           <RequireAuth>
             <Dashboard />
@@ -50,6 +51,8 @@ function App() {
         <Route path='dashboard/add-products' element={
             <AddProducts />
         }></Route>
+        <Route path='dashboard/users'>
+        </Route>
 
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>

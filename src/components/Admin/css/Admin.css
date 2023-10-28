@@ -27,6 +27,56 @@
     height: 100vh;
 }
 
-.custom_form_group {
-    width: 474px;
+.form_group {
+    width: 500px;
+}
+
+.table .productImg_holder img {
+    width: 38px;
+    height: auto;
+}
+
+/* Dashboard CSS */
+.revenue_box,
+.orders_box,
+.products_box, 
+.users_box {
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.revenue_box h5 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.orders_box h5 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.products_box h5 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.users_box h5 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.revenue_box {
+    background: khaki;
+}
+
+.orders_box {
+    background: powderblue;
+}
+
+.products_box {
+    background: palegreen;
+}
+
+.users_box {
+    background: papayawhip;
 }

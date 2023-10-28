@@ -6,30 +6,18 @@ import UseCart from '../Hooks/UseCart';
 import Product from '../Product/Product';
 import './Shop.css'
 import Banner from '../Banner/Banner';
+import { Col, Container, Row } from 'reactstrap';
+import useGetData from '../../custom-hooks/useGetData';
+import ProductList from '../UI/ProductList';
 
 const Shop = () => {
+    const {data: output} = useGetData('products');
+    const [mobileProducts, setMobileProducts] = useState([]);
+    const [trendingProducts, setTrendingProducts] = useState([]);
     const [cart, setCart] = UseCart(); // the next page will not reset added prods
-    const [pagecount, setPagecount] = useState(0); // numbers default value is 0, pagination.
-    const [page, setPage] = useState(0); // for pagination
-    const [size, setSize] = useState(10); // for size, default value 10. page will show 10 products.
     const [products, setProducts] = useState([]);  
 
-    useEffect( () => {
-        fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
-        .then(res => res.json())
-        .then(data => setProducts(data))
-    }, [page, size]) // dependencies for if page hit api will change, and size will also change.
-
-    // pagination
-    useEffect(()=>{
-        fetch('http://localhost:5000/productcount')
-        .then(res => res.json())
-        .then(data =>{
-            const count = data.count; // data = a object in http://localhost:5000/productcount
-            const pages = Math.ceil(count/10); // per page would have 10 data or pd
-            setPagecount(pages);
-        })
-    }, [])
+    // pagination..
 
     useEffect(() => {
         // console.log('fetch uploaded')
@@ -39,6 +27,20 @@ const Shop = () => {
             setProducts(data);
         })
     }, [])
+
+    useEffect(() => {
+        const filteredTrendingProducts = output.filter(
+            item => item.category === 'watch'
+        )
+
+        const filteredMobileProducts = output.filter(
+            item => item.category === 'phone'
+        )
+
+        setTrendingProducts(filteredTrendingProducts);
+        setMobileProducts(filteredMobileProducts);
+
+    }, [output]);
 
     // useEffect(() => {
     //     const storedCart = getStoredCart(); // storedCart ekta object dibe
@@ -90,22 +92,26 @@ const Shop = () => {
                         handleAddToCart={handleAddToCart}
                         ></Product>)
                 }
-                {/* pagination scroll */}
-                <div className='pagination'>
-                    {
-                        [...Array(pagecount).keys()]
-                        .map(number => <button 
-                            className={page === number ? 'selected' : ''}
-                            onClick={() => setPage(number)}
-                            >{number + 1}</button>)
-                    }
-                    <select onChange={e => setSize(e.target.value)}>
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                    </select>
-                </div>
+                <section className='trending_products'>
+                    <Container>
+                        <Row>
+                            <Col lg="12">
+                            <h2>Trending products</h2>
+                            </Col>
+                            <ProductList data={trendingProducts} />
+                        </Row>
+                    </Container>
+                </section>
+                <section className='new_arrivals'>
+                    <Container>
+                        <Row>
+                            <Col lg="12">
+                            <h2>New arrivals</h2>
+                            </Col>
+                            <ProductList data={mobileProducts} />
+                        </Row>
+                    </Container>
+                </section>
             </div>
             {/* <div className="cart-container">
                 <Cart cart={cart}>
