@@ -35,7 +35,7 @@ const AddProducts = () => {
       }, ()=>{
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL)=>{
           await addDoc(docRef, {
-            title: productTitle,
+            name: productTitle,
             shortDesc: productShortDes,
             descripton: productDesc,
             category: enterCategory,
@@ -85,7 +85,6 @@ const AddProducts = () => {
             type="text"
             name="shortDescription"
             id="shortDescription"
-            required
             className="border-1 border-secondary"
             value={productShortDes}
             onChange={(e) => setProductShortDes(e.target.value)}
@@ -121,10 +120,11 @@ const AddProducts = () => {
             <div>
             <select class="w-100 border-secondary rounded p-2 mt-2" value={enterCategory} onChange={e=> setenterCategory(e.target.value)}>
               <option value="">select category</option>
-              <option value="watch">watch</option>
+              <option value="watches">watch</option>
               <option value="shoes">shoes</option>
-              <option value="phone">phones</option>
-              <option value="watch">glasses</option>
+              <option value="smartphones">phones</option>
+              <option value="eyeglasses">eye glasses</option>
+              <option value="Cap">cap</option>
             </select>
             </div>
           </FormGroup>

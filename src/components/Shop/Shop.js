@@ -6,14 +6,16 @@ import UseCart from '../Hooks/UseCart';
 import Product from '../Product/Product';
 import './Shop.css'
 import Banner from '../Banner/Banner';
-import { Col, Container, Row } from 'reactstrap';
 import useGetData from '../../custom-hooks/useGetData';
 import ProductList from '../UI/ProductList';
+import { Col, Container, Row } from 'reactstrap';
 
 const Shop = () => {
     const {data: output} = useGetData('products');
     const [mobileProducts, setMobileProducts] = useState([]);
     const [trendingProducts, setTrendingProducts] = useState([]);
+    const [eyeglassesPd, seteyeGlassesPd] = useState([]);
+    const [capProducts, setCapProducts] = useState([]);
     const [cart, setCart] = UseCart(); // the next page will not reset added prods
     const [products, setProducts] = useState([]);  
 
@@ -30,15 +32,25 @@ const Shop = () => {
 
     useEffect(() => {
         const filteredTrendingProducts = output.filter(
-            item => item.category === 'watch'
+            item => item.category === 'watches'
         )
 
         const filteredMobileProducts = output.filter(
-            item => item.category === 'phone'
+            item => item.category === 'smartphones'
+        )
+
+        const filteredEyeGlassesPd = output.filter(
+            item => item.category === 'eyeglasses'
+        )
+
+        const filteredCapProducts = output.filter(
+            item => item.category === 'Cap'
         )
 
         setTrendingProducts(filteredTrendingProducts);
         setMobileProducts(filteredMobileProducts);
+        seteyeGlassesPd(filteredEyeGlassesPd);
+        setCapProducts(filteredCapProducts);
 
     }, [output]);
 
@@ -90,29 +102,29 @@ const Shop = () => {
                         key={product._id}
                         product={product}
                         handleAddToCart={handleAddToCart}
-                        ></Product>)
+                        ></Product>
+                    )
                 }
-                <section className='trending_products'>
-                    <Container>
-                        <Row>
-                            <Col lg="12">
-                            <h2>Trending products</h2>
-                            </Col>
-                            <ProductList data={trendingProducts} />
-                        </Row>
-                    </Container>
-                </section>
-                <section className='new_arrivals'>
-                    <Container>
-                        <Row>
-                            <Col lg="12">
-                            <h2>New arrivals</h2>
-                            </Col>
-                            <ProductList data={mobileProducts} />
-                        </Row>
-                    </Container>
-                </section>
             </div>
+            <section>
+            <div className="our-products-title">
+                <h1 className="mt-5 mb-3">Trending products</h1>
+                <p>Trending Must-Haves Here!</p>
+            </div>
+                <div className="products-container">
+                    <ProductList data={trendingProducts} />
+                </div>
+            </section>
+            <section>
+            <div className="our-products-title">
+                <h1 className="mt-5 mb-3">New arrivals</h1>
+                <p>Introducing our new arrivals</p>
+            </div>
+                <div className="products-container">
+                    <ProductList data={mobileProducts} />
+                    <ProductList data={eyeglassesPd} />
+                </div>
+            </section>
             {/* <div className="cart-container">
                 <Cart cart={cart}>
                     <Link to="/orders">
