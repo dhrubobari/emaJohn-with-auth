@@ -15,6 +15,7 @@ import AddProducts from './components/Admin/AddProducts';
 import AdminNav from './components/Admin/AdminNav';
 import { useLocation } from 'react-router-dom';
 import useGetData from './custom-hooks/useGetData';
+import ProductDetailsCard from './components/ProductDetails/ProductDetailsPage/ProductDetailsCard';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Shop></Shop>}></Route>
         <Route path='/shop' element={<Shop></Shop>}></Route>
+        <Route path='/shop/product-details' element={<ProductDetailsCard />}></Route>
         <Route path='/orders' element={<Orders></Orders>}></Route>
         <Route path='/inventory' element={
           <RequireAuth>

@@ -1,69 +1,82 @@
-import { signOut } from 'firebase/auth';
-import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
-import auth from '../../firebase.init';
-import logo from '../../images/Logo.svg';
-import './Header.css';
+import { signOut } from "firebase/auth";
+import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link } from "react-router-dom";
+import auth from "../../firebase.init";
+import logo from "../../images/Logo.svg";
+import "./Header.css";
+import { faSearch, faShoppingCart, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = () => {
-    const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
-    const handleSignOut = () => {
-        signOut(auth);
-    }
-    
-    return (
+  const handleSignOut = () => {
+    signOut(auth);
+  };
+
+  const showBtns = Array.from(document.getElementsByClassName("showbtn"));
+  showBtns.map((btn) => {
+    btn.addEventListener("click", () => {
+      console.log("click");
+      document.getElementById("sidemenu").classList.toggle("show");
+    });
+  });
+
+  const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
+  const toggleProfileDropdown = () => {
+      setProfileDropdownOpen(!isProfileDropdownOpen);
+  };
+
+  return (
     <>
-        <div class="bottom-bar">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <div class="logo">
-                            <a href="#">
-                                <img src={logo} alt="Logo" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="search">
-                            <input type="text" placeholder="Search" />
-                            <button><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="user">
-                            <a href="wishlist.html" class="btn wishlist">
-                                <i class="fa fa-heart"></i>
-                                <span>(0)</span>
-                            </a>
-                            <a href="cart.html" class="btn cart">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>(0)</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+      <section className="nav__side">
+        <nav>
+          <div className="brand">
+            <img src={logo} alt="" />
+          </div>
+          <div className="searchbar">
+            <input type="text" placeholder="search your product"/>
+            <button>
+              <FontAwesomeIcon icon={faSearch} style={{fontSize: "16px"}} />
+            </button>
+          </div>
+          <div className="links">
+            <div className="cart">
+            <FontAwesomeIcon icon={faShoppingCart} />
+              <span>5</span>
             </div>
-        </div>
-        <nav className='header'>
+            <div className="user" id="profile_dropdown" onClick={toggleProfileDropdown}>
+            <FontAwesomeIcon icon={faUserCircle} style={{ color: "#FFF", marginTop: "25px" }} />
+            </div>
+          </div>
+          <div className={isProfileDropdownOpen ? "profilre_dropdown toggle_profile_dropdown" : "profilre_dropdown"}>
+            <ul>
+              <li>
+                <a href="#">{
+                    user ?
+                    <button type="button" class="btn btn-success" onClick={handleSignOut}>Sign Out</button>
+                    :
+                    <Link to="/login">Login</Link>
+                }</a>
+              </li>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>  
+              </li>
+            </ul>
+          </div>
+        </nav> 
+        <div className='header'>
             {/* <img src={logo} alt="" /> */}
-            <div>
                 <Link to="/shop">Shop</Link>
                 <Link to="/orders">Orders</Link>
                 <Link to="/inventory">Inventory</Link>
                 <Link to="/about">About</Link>
-                {
-                    user ?
-                    <button onClick={handleSignOut}>Sign Out</button>
-                    :
-                    <Link to="/login">Login</Link>
-                }
-                <Link to="/dashboard">Dashboard</Link>
-            </div>
-        </nav>
-    </>    
-    );
+        </div>  
+      </section>
+    </>
+  );
 };
 
 export default Header;
