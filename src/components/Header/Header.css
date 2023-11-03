@@ -131,127 +131,6 @@ nav .links {
   left:20px;
   cursor:pointer;
 }
-.nav2 {
-  display: flex;
-  background-color: #232f3e;
-  height: 50px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
-}
-.nav2 ul {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-
-}
-.nav2 ul li {
-  list-style: none;
-}
-.nav2 ul li a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 15px;
-  border: 1px solid #232f3e;
-  padding: 5px 8px;
-}
-.nav2 ul li a:hover,
-.nav2 .menu:hover,
-.nav2 .downloadApp a:hover {
-  border: 1px solid #fff;
-}
-.nav2 .menu {
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  border: 1px solid #232f3e;
-  padding: 5px 8px;
-}
-.nav2 .downloadApp a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 18px;
-  border: 1px solid #232f3e;
-  padding: 5px 8px;
-}
-.sidebar {
-  top: 0;
-  background-color: #fff;
-  color: black;
-  position: fixed;
-  left: -100%;
-  height: 100vh;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  overflow-y: scroll;
-  transition: 0.3s;
-  z-index: 999;
-}
-.sidebar .top {
-  padding: 10px 30px;
-  background-color: #232f3e;
-  color: #fff;
-  font-size: 25px;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.sidebar .top button {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 25px;
-  cursor: pointer;
-}
-.sidebar ul {
-  padding: 0 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 20px;
-}
-.sidebar ul .title {
-  font-weight: bold;
-  font-size: 22px;
-}
-.sidebar ul li {
-  list-style: none;
-}
-.sidebar ul li a {
-  color: #000;
-  text-decoration: none;
-}
-.show {
-  left: 0;
-}
-/* main */
-@media only screen and (max-width: 1760px) {
-  .nav2 ul li:nth-last-of-type(1),
-  .nav2 ul li:nth-last-of-type(2),
-  .nav2 ul li:nth-last-of-type(3) {
-    display: none;
-  }
-}
-@media only screen and (max-width: 1440px) {
-  .nav2 .downloadApp a {
-    font-size: 15px;
-  }
-  .nav2 {
-    padding: 0 10px;
-  }
-  .nav2 ul {
-    display: flex;
-    gap: 0;
-  }
-  .nav2 ul li a {
-    font-size: 13px;
-  }
-}
 
 @media only screen and (max-width: 1288px) {
   nav input {
@@ -264,23 +143,6 @@ nav .links {
   .nav2 ul li:nth-last-of-type(3),
   .nav2 ul li:nth-last-of-type(4),
   .nav2 ul li:nth-last-of-type(5) {
-    display: none;
-  }
-}
-@media only screen and (max-width: 1024px) {
-  nav input {
-    width: 600px;
-  }
-  .nav2 ul {
-    display: flex;
-    gap: 0;
-  }
-}
-@media only screen and (max-width: 998px) {
-  nav input {
-    width: 400px;
-  }
-  .nav2 ul {
     display: none;
   }
 }
@@ -322,16 +184,6 @@ nav .links {
   nav {
     padding: 0 10px;
   }
-  .nav2 .menu {
-    font-size: 15px;
-    padding: 3px 5px;
-  }
-  .nav2 .downloadApp a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 14px;
-    padding: 3px 5px;
-  }
   .sidebar {
     left: -120%;
   }
@@ -359,16 +211,6 @@ nav .links {
   .sidebar ul .title {
     font-weight: bold;
     font-size: 22px;
-  }
-  .nav2 .menu {
-    border: none;
-    padding: 0;
-    font-size: 13px;
-  }
-  .nav2 .downloadApp a {
-    font-size: 13px;
-    border: none;
-    padding: 0;
   }
   nav .links div:nth-of-type(1),
   nav .links div:nth-of-type(3) {
