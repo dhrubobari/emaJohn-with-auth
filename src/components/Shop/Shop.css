@@ -53,6 +53,7 @@
 }
 
 .pagination button {
+    padding: 3px;
     margin-right: 10px;
     background-color: white;
     border: 1px solid #fed000;

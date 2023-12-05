@@ -20,7 +20,6 @@ import ProductDetailsCard from './components/ProductDetails/ProductDetailsPage/P
 function App() {
 
   const location = useLocation();
-  const {data: products, loading} = useGetData('products');
 
   return (
     <>
@@ -55,7 +54,6 @@ function App() {
         }></Route>
         <Route path='dashboard/users'>
         </Route>
-
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<SignUp></SignUp>}></Route>
@@ -63,6 +61,5 @@ function App() {
     </>
   )
 }
-// even if path goes to home, it will show again the shop component.
 
 export default App;

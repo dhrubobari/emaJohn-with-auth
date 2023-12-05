@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { addToDb } from '../../utilities/fakedb';
-import Cart from '../Cart/Cart';
 import UseCart from '../Hooks/UseCart';
 import Product from '../Product/Product';
 import './Shop.css'
 import Banner from '../Banner/Banner';
+import Footer from '../Footer/Footer';
 import useGetData from '../../custom-hooks/useGetData';
 import ProductList from '../UI/ProductList';
-import { Col, Container, Row } from 'reactstrap';
 
 const Shop = () => {
     const {data: output} = useGetData('products');
@@ -16,11 +14,20 @@ const Shop = () => {
     const [trendingProducts, setTrendingProducts] = useState([]);
     const [eyeglassesPd, seteyeGlassesPd] = useState([]);
     const [capProducts, setCapProducts] = useState([]);
-    const [cart, setCart] = UseCart(); // the next page will not reset added prods
+    const [cart, setCart] = UseCart();
     const [products, setProducts] = useState([]);  
+    const [pageCount, setPageCount] = useState(0);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
 
-    // pagination..
-
+    useEffect(() => {
+        fetch(`http://localhost:5002/product?page=${page}&size=${size}`)
+            .then(res => res.json())
+            .then(data => setProducts(data))
+            .catch(error => console.error('Error fetching products:', error));
+    }, [page, size]);
+    
+    
     useEffect(() => {
         // console.log('fetch uploaded')
         fetch('products.json')
@@ -29,6 +36,21 @@ const Shop = () => {
             setProducts(data);
         })
     }, [])
+
+    useEffect(() => {
+        fetch('http://localhost:5002/productCount')
+            .then(res => res.json())
+            .then(data => {
+                const count = data.count;
+                const pages = Math.ceil(count/10);
+                setPageCount(pages);
+            })
+            .catch(error => {
+                console.error('Error fetching product count:', error);
+                setPageCount(1);
+            });
+    }, []);
+       
 
     useEffect(() => {
         const filteredTrendingProducts = output.filter(
@@ -106,6 +128,19 @@ const Shop = () => {
                     )
                 }
             </div>
+            <div className="pagination m-5">
+                {
+                    [...Array(pageCount).keys()].map(number => <button 
+                        className={page === number ? 'selected':''}
+                        onClick={() => setPage(number)}>{number + 1}</button>)
+                }
+                <select onChange={e => setSize(e.target.value)}>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
             <section>
             <div className="our-products-title">
                 <h1 className="mt-5 mb-3">Trending products</h1>
@@ -132,6 +167,7 @@ const Shop = () => {
                     </Link>
                 </Cart>
             </div> */}
+            <Footer />
         </div>
         </>
     );
